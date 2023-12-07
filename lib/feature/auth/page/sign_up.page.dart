@@ -8,7 +8,10 @@ import 'package:go_router/go_router.dart';
 
 // Project imports:
 import 'package:jobjolt/feature/auth/provider/auth_provider.dart';
-import 'package:jobjolt/feature/auth/state/auth_state.dart';
+import 'package:jobjolt/shared/widget/button/jobjolt_filled_button.widget.dart';
+import 'package:jobjolt/shared/widget/form/jobjolt_email_field.widget.dart';
+import 'package:jobjolt/shared/widget/form/jobjolt_password_field.widget.dart';
+import 'package:jobjolt/shared/widget/form/jobjolt_text_form_field.widget.dart';
 
 class SignUpPage extends ConsumerWidget {
   SignUpPage({super.key});
@@ -19,73 +22,72 @@ class SignUpPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-        body: Container(
-            margin: const EdgeInsets.only(left: 20, right: 20),
-            child: Column(children: <Widget>[
-              const SizedBox(height: 150),
-              Text(
-                "sign_up".tr(),
-                style: TextStyle(
-                    color: Colors.grey[800],
-                    fontWeight: FontWeight.bold,
-                    fontSize: 40),
-              ),
-              Form(
-                child: Column(
-                  children: [
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "name".tr(),
-                      ),
-                      controller: _nameController,
+      body: Stack(
+        alignment: Alignment.center,
+        fit: StackFit.expand,
+        children: [
+          Center(
+            child: SingleChildScrollView(
+                padding: const EdgeInsets.all(32.0),
+                child: Column(children: <Widget>[
+                  Text(
+                    "sign_up".tr(),
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                      fontWeight: FontWeight.bold
                     ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "email".tr(),
-                      ),
-                      controller: _emailController,
+                  ),
+                  const SizedBox(height: 64),
+                  Form(
+                    child: Column(
+                      children: [
+                        JobJoltTextFormField(
+                          controller: _nameController,
+                          prefixIcon: const Icon(Icons.person_outline),
+                          labelText: "name".tr(),
+                        ),
+                        const SizedBox(height: 16),
+                        JobJoltEmailField(
+                          controller: _emailController,
+                        ),
+                        const SizedBox(height: 16),
+                        JobJoltPasswordField(
+                          controller: _passwordController,
+                        ),
+                        const SizedBox(height: 32),
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              JobJoltFilledButton(
+                                text: "sign_up".tr(),
+                                onPressed: () {
+                                  ref.read(authNotifierProvider.notifier).signUp(_nameController.text,
+                                      _emailController.text, _passwordController.text);
+                                },
+                              ),
+                              const SizedBox(height: 4.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("already_have_an_account".tr()),
+                                  TextButton(
+                                    onPressed: () {
+                                      context.pop();
+                                    },
+                                    child: Text("sign_in".tr()),
+                                  ),
+                                ],
+                              ),
+                            ]
+                        ),
+                      ],
                     ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "password".tr(),
-                      ),
-                      controller: _passwordController,
-                      obscureText: true,
-                    ),
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          const SizedBox(height: 30),
-                          _widgetSignUpButton(context, ref),
-                          const SizedBox(height: 30),
-                          _widgetSignInButton(context, ref),
-                        ]),
-                  ],
-                ),
+                  )
+                ]
               )
-            ])));
-  }
-
-  Widget _widgetSignInButton(BuildContext context, WidgetRef ref) {
-    return SizedBox(
-        width: double.infinity,
-        child: ElevatedButton(
-          onPressed: () {
-            context.pop();
-          },
-          child: Text("sign_in").tr(),
-        ));
-  }
-
-  Widget _widgetSignUpButton(BuildContext context, WidgetRef ref) {
-    return SizedBox(
-        width: double.infinity,
-        child: ElevatedButton(
-          onPressed: () {
-            ref.read(authNotifierProvider.notifier).signUp(_nameController.text,
-                _emailController.text, _passwordController.text);
-          },
-          child: Text("sign_up".tr()),
-        ));
+            ),
+          )
+        ],
+      )
+    );
   }
 }
