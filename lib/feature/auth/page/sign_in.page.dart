@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 // Project imports:
 import 'package:jobjolt/feature/auth/provider/auth_provider.dart';
-import 'package:jobjolt/gen/assets.gen.dart';
 import 'package:jobjolt/shared/route/app_router.dart';
+import 'package:jobjolt/shared/widget/button/jobjolt_filled_button.widget.dart';
+import 'package:jobjolt/shared/widget/form/jobjolt_email_field.widget.dart';
+import 'package:jobjolt/shared/widget/form/jobjolt_password_field.widget.dart';
+import 'package:jobjolt/shared/widget/jobjolt_logo.widget.dart';
 
 class SignInPage extends ConsumerStatefulWidget {
   const SignInPage({
@@ -27,123 +29,68 @@ class _SignInPageState extends ConsumerState<SignInPage> {
   final TextEditingController _controllerUsername = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
 
-  bool _obscurePassword = true;
-
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(32.0),
-          child: Column(
-            children: [
-              const SizedBox(height: 125),
-              SvgPicture.asset(
-                Assets.images.logo.jobjolt,
-                colorFilter: ColorFilter.mode(
-                    Theme.of(context).colorScheme.primary,
-                    BlendMode.srcIn
-                ),
-                semanticsLabel: 'JobJolt Logo',
-                width: MediaQuery.of(context).size.width / 2.5,
-              ),
-              const SizedBox(height: 64),
-              TextFormField(
-                controller: _controllerUsername,
-                keyboardType: TextInputType.name,
-                decoration: InputDecoration(
-                  labelText: "email".tr(),
-                  prefixIcon: const Icon(Icons.email_outlined),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                ),
-                onEditingComplete: () => _focusNodePassword.requestFocus(),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please enter email.";
-                  }
-
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _controllerPassword,
-                focusNode: _focusNodePassword,
-                obscureText: _obscurePassword,
-                keyboardType: TextInputType.visiblePassword,
-                decoration: InputDecoration(
-                  labelText: "password".tr(),
-                  prefixIcon: const Icon(Icons.password_outlined),
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _obscurePassword = !_obscurePassword;
-                        });
-                      },
-                      icon: _obscurePassword
-                          ? const Icon(Icons.visibility_outlined)
-                          : const Icon(Icons.visibility_off_outlined)),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please enter password.";
-                  }
-
-                  return null;
-                },
-              ),
-              const SizedBox(height: 32),
-              Column(
-                children: [
-                  FilledButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(55),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
+      body: Stack(
+        alignment: Alignment.center,
+        fit: StackFit.expand,
+        children: [
+          Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(32.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    const JobJoltLogo(),
+                    const SizedBox(height: 64),
+                    JobJoltEmailField(
+                      controller: _controllerUsername,
+                      onEditingComplete: _focusNodePassword.requestFocus,
                     ),
-                    onPressed: () {
-                      if (_formKey.currentState?.validate() ?? false) {
-                        ref
-                            .read(authNotifierProvider.notifier)
-                            .login(_controllerUsername.text, _controllerPassword.text);
-                      }
-                    },
-                    child: Text("sign_in".tr()),
-                  ),
-                  const SizedBox(height: 4.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("Don't have an account?"),
-                      TextButton(
-                        onPressed: () {
-                          _formKey.currentState?.reset();
+                    const SizedBox(height: 16),
+                    JobJoltPasswordField(
+                      controller: _controllerPassword,
+                      focusNode: _focusNodePassword,
+                    ),
+                    const SizedBox(height: 32),
+                    Column(
+                      children: [
+                        JobJoltFilledButton(
+                          text: "sign_in".tr(),
+                          onPressed: () {
+                            if (_formKey.currentState?.validate() ?? false) {
+                              ref
+                                  .read(authNotifierProvider.notifier)
+                                  .login(_controllerUsername.text, _controllerPassword.text);
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 4.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("dont_have_an_account".tr()),
+                            TextButton(
+                              onPressed: () {
+                                _formKey.currentState?.reset();
 
-                          ref.read(routerProvider).push(SignUpRoute.path);
-                        },
-                        child: Text("sign_up".tr()),
-                      ),
-                    ],
-                  ),
-                ],
+                                ref.read(routerProvider).push(SignUpRoute.path);
+                              },
+                              child: Text("sign_up".tr()),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
