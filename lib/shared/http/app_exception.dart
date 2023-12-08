@@ -5,12 +5,15 @@ part 'app_exception.freezed.dart';
 
 @freezed
 class AppException with _$AppException {
-  const factory AppException.connectivity() = AppExceptionConnectivity;
+  const factory AppException.connectivity(String? message) =
+    AppExceptionConnectivity;
 
-  const factory AppException.unauthorized() = AppExceptionUnauthorized;
+  const factory AppException.unauthorized(String? message) =
+    AppExceptionUnauthorized;
 
   const factory AppException.errorWithMessage(String message) =
-      _AppExceptionErrorMessage;
+    _AppExceptionErrorMessage;
 
-  const factory AppException.error() = _AppExceptionError;
+  const factory AppException.error(String? message) =
+    _AppExceptionError;
 }

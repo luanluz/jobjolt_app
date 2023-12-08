@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
+
+// Project imports:
 import 'package:jobjolt/gen/assets.gen.dart';
 
 class JobJoltLogo extends StatelessWidget {

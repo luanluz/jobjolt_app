@@ -36,7 +36,7 @@ class TokenRepository implements TokenRepositoryProtocol {
       const storage = FlutterSecureStorage();
       try {
         await storage.delete(key: StoreKey.token.toString());
-      } on Exception catch (e) {}
+      } on Exception catch (_) {}
     } else {
       await prefs.remove(StoreKey.token.toString());
     }
@@ -55,7 +55,7 @@ class TokenRepository implements TokenRepositoryProtocol {
       try {
         await storage.write(
             key: StoreKey.token.toString(), value: tokenToJson(token));
-      } on Exception catch (e) {}
+      } on Exception catch (_) {}
     } else {
       await prefs.setString(StoreKey.token.toString(), tokenToJson(token));
     }
@@ -63,9 +63,6 @@ class TokenRepository implements TokenRepositoryProtocol {
 
   @override
   Future<Token?> fetchToken() async {
-    // if (_token != null) {
-    //   return _token;
-    // }
 
     String? tokenValue;
 
@@ -82,7 +79,7 @@ class TokenRepository implements TokenRepositoryProtocol {
       if (tokenValue != null) {
         _token = tokenFromJson(tokenValue);
       }
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       return _token;
     }
 

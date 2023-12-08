@@ -9,8 +9,6 @@ import 'package:jobjolt/feature/auth/model/token.dart';
 import 'package:jobjolt/feature/auth/repository/token_repository.dart';
 import 'package:jobjolt/feature/auth/state/auth_state.dart';
 import 'package:jobjolt/shared/http/api_provider.dart';
-import 'package:jobjolt/shared/http/app_exception.dart';
-import 'package:jobjolt/shared/util/validator.util.dart';
 
 abstract class AuthRepositoryProtocol {
   Future<AuthState> login(String email, String password);
@@ -21,25 +19,15 @@ abstract class AuthRepositoryProtocol {
 final authRepositoryProvider = Provider(AuthRepository.new);
 
 class AuthRepository implements AuthRepositoryProtocol {
-  AuthRepository(this._ref) {}
+  AuthRepository(this._ref);
 
   late final ApiProvider _api = _ref.read(apiProvider);
   final Ref _ref;
 
   @override
   Future<AuthState> login(String email, String password) async {
-    if (!Validator.isValidPassWord(password)) {
-      return const AuthState.error(
-          AppException.errorWithMessage('Minimum 8 characters required'));
-    }
-    if (!Validator.isValidEmail(email)) {
-      return const AuthState.error(
-          AppException.errorWithMessage('Please enter a valid email address'));
-    }
-    final params = {
-      'email': email,
-      'password': password,
-    };
+    final params = {'email': email, 'password': password};
+
     final loginResponse = await _api.post('login', jsonEncode(params));
 
     return loginResponse.when(success: (success) async {
@@ -57,21 +45,12 @@ class AuthRepository implements AuthRepositoryProtocol {
 
   @override
   Future<AuthState> signUp(String name, String email, String password) async {
-    if (!Validator.isValidPassWord(password)) {
-      return const AuthState.error(
-        AppException.errorWithMessage('Minimum 8 characters required'),
-      );
-    }
-    if (!Validator.isValidEmail(email)) {
-      return const AuthState.error(
-        AppException.errorWithMessage('Please enter a valid email address'),
-      );
-    }
     final params = {
       'name': name,
       'email': email,
       'password': password,
     };
+
     final loginResponse = await _api.post('sign_up', jsonEncode(params));
 
     return loginResponse.when(success: (success) async {

@@ -6,10 +6,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Project imports:
+import 'package:jobjolt/feature/auth/provider/auth_provider.dart';
 import 'package:jobjolt/feature/home/provider/books_provider.dart';
 import 'package:jobjolt/feature/home/widget/row_book_widget.dart';
 import 'package:jobjolt/shared/http/app_exception.dart';
-import 'package:jobjolt/shared/route/app_router.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -24,8 +24,7 @@ class HomePage extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.adjust),
             onPressed: () {
-              ref.read(routerProvider).go(SignInRoute.path);
-              //ref.read(authNotifierProvider.notifier).logout();
+              ref.read(authNotifierProvider.notifier).logout();
             },
           ),
         ],
