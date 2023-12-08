@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Project imports:
 import 'package:jobjolt/feature/auth/provider/auth_provider.dart';
 import 'package:jobjolt/shared/route/app_router.dart';
+import 'package:jobjolt/shared/services/notification.service.dart';
 import 'package:jobjolt/shared/widget/button/jobjolt_filled_button.widget.dart';
 import 'package:jobjolt/shared/widget/form/jobjolt_email_field.widget.dart';
 import 'package:jobjolt/shared/widget/form/jobjolt_password_field.widget.dart';
@@ -28,6 +29,23 @@ class _SignInPageState extends ConsumerState<SignInPage> {
   final FocusNode _focusNodePassword = FocusNode();
   final TextEditingController _controllerUsername = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    ref.listenManual(authNotifierProvider, (previous, next) {
+      next.whenOrNull(
+        loggedIn: () => NotificationService.success('hello_back'.tr()),
+        error: (error) => error.when(
+          connectivity: NotificationService.error,
+          unauthorized: NotificationService.error,
+          errorWithMessage: NotificationService.error,
+          error: NotificationService.error
+        )
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +78,9 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                       children: [
                         JobJoltFilledButton(
                           text: "sign_in".tr(),
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formKey.currentState?.validate() ?? false) {
-                              ref
+                              await ref
                                   .read(authNotifierProvider.notifier)
                                   .login(_controllerUsername.text, _controllerPassword.text);
                             }

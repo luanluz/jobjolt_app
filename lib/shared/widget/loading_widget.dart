@@ -6,6 +6,14 @@ class LoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Scaffold(
+      body: Stack(
+        alignment: Alignment.center,
+        fit: StackFit.expand,
+        children: [
+          Center(child: CircularProgressIndicator())
+        ],
+      ),
+    );
   }
 }

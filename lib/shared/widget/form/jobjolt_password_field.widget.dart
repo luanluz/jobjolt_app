@@ -1,5 +1,11 @@
-import 'package:easy_localization/easy_localization.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:easy_localization/easy_localization.dart';
+import 'package:zod_validation/zod_validation.dart';
+
+// Project imports:
 import 'package:jobjolt/shared/widget/form/jobjolt_text_form_field.widget.dart';
 
 class JobJoltPasswordField extends StatefulWidget {
@@ -44,13 +50,7 @@ class _JobJoltPasswordFieldState extends State<JobJoltPasswordField> {
       ),
       labelText: "password".tr(),
       keyboardType: TextInputType.visiblePassword,
-      validator: widget.validator ?? (String? value) {
-        if (value == null || value.isEmpty) {
-          return "Please enter password.";
-        }
-
-        return null;
-      },
+      validator: widget.validator ?? Zod().required().password().build,
     );
   }
 }
