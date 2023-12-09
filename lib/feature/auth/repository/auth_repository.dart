@@ -44,14 +44,14 @@ class AuthRepository implements AuthRepositoryProtocol {
   }
 
   @override
-  Future<AuthState> signUp(String name, String email, String password) async {
+  Future<AuthState> signUp(String username, String email, String password) async {
     final params = {
-      'name': name,
+      'username': username,
       'email': email,
       'password': password,
     };
 
-    final loginResponse = await _api.post('sign_up', jsonEncode(params));
+    final loginResponse = await _api.post('create-account', jsonEncode(params));
 
     return loginResponse.when(success: (success) async {
       final tokenRepository = _ref.read(tokenRepositoryProvider);

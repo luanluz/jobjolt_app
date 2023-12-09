@@ -21,8 +21,8 @@ class AuthNotifier extends _$AuthNotifier {
     state = await _loginRepository.login(email, password);
   }
 
-  Future<void> signUp(String name, String email, String password) async {
-    state = await _loginRepository.signUp(name, email, password);
+  Future<void> signUp(String username, String email, String password) async {
+    state = await _loginRepository.signUp(username, email, password);
   }
 
   late final TokenRepository _tokenRepository =
