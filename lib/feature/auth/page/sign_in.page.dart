@@ -31,6 +31,14 @@ class _SignInPageState extends ConsumerState<SignInPage> {
   final TextEditingController _controllerPassword = TextEditingController();
 
   @override
+  void dispose() {
+    _focusNodePassword.dispose();
+    _controllerUsername.dispose();
+    _controllerPassword.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
 
@@ -49,7 +57,6 @@ class _SignInPageState extends ConsumerState<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Stack(
         alignment: Alignment.center,
@@ -111,13 +118,5 @@ class _SignInPageState extends ConsumerState<SignInPage> {
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _focusNodePassword.dispose();
-    _controllerUsername.dispose();
-    _controllerPassword.dispose();
-    super.dispose();
   }
 }

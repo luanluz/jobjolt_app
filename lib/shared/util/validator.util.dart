@@ -1,36 +1,15 @@
-// Project imports:
-import 'package:jobjolt/shared/util/email_validator.util.dart';
+// Package imports:
+import 'package:zod_validation/zod_validation.dart';
 
-class Validator {
-  static bool isValidEmail(String? value) {
-    if (value == null) {
-      return false;
-    }
-    if (value.isEmpty) {
-      return false;
-    }
-    if (value.length < 4) {
-      return false;
-    }
+class ValidatorUtil {
+  static String? emailValidate(String? email) =>
+      Zod().required().email().build(email);
 
-    return EmailValidator.validate(value);
-  }
+  static String? passwordValidate(String? email) =>
+      Zod().required().password().build(email);
 
-  static bool isValidPassWord(String? value) {
-    if (value == null) {
-      return false;
-    }
-    if (value.isEmpty) {
-      return false;
-    }
-    if (value.length < 5) {
-      return false;
-    }
-    // bool passValid = RegExp(
-    //         "^(?=.{8,32}\$)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%^&*(),.?:{}|<>]).*")
-    //     .hasMatch(value);
-    //return passValid;
-
-    return true;
-  }
+  static String? usernameValidate(String? username) =>
+      Zod().min(2).max(20)
+        .custom((v) => RegExp(r'^[a-zA-Z][a-zA-Z0-9_]{0,19}$').hasMatch(v))
+        .build(username);
 }

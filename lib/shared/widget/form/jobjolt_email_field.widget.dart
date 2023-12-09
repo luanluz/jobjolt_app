@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
-import 'package:zod_validation/zod_validation.dart';
 
 // Project imports:
+import 'package:jobjolt/shared/util/validator.util.dart';
 import 'package:jobjolt/shared/widget/form/jobjolt_text_form_field.widget.dart';
 
 class JobJoltEmailField extends StatelessWidget {
@@ -28,7 +28,7 @@ class JobJoltEmailField extends StatelessWidget {
       labelText: "email".tr(),
       keyboardType: TextInputType.name,
       onEditingComplete: onEditingComplete,
-      validator: validator ?? Zod().required().email().build,
+      validator: validator ?? ValidatorUtil.emailValidate,
     );
   }
 }
