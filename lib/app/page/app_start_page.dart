@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Project imports:
 import 'package:jobjolt/app/provider/app_start_provider.dart';
 import 'package:jobjolt/feature/auth/page/sign_in.page.dart';
-import 'package:jobjolt/feature/home/widget/home_page.dart';
+import 'package:jobjolt/feature/home/page/home_page.dart';
 import 'package:jobjolt/shared/widget/connection_unavailable_widget.dart';
 import 'package:jobjolt/shared/widget/loading_widget.dart';
 

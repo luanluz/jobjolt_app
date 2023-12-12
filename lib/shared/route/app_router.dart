@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:go_router/go_router.dart';
+import 'package:jobjolt/feature/applicant/page/applicant.page.dart';
+import 'package:jobjolt/feature/company/page/company.page.dart';
+import 'package:jobjolt/feature/profile/page/profile.page.dart';
+import 'package:jobjolt/feature/vacancy/page/vacancy.page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // Project imports:
@@ -16,15 +20,11 @@ final globalNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'routerKey');
 
 @riverpod
 GoRouter router(RouterRef ref) {
-  //final notifier = ref.watch(routerNotifierProvider.notifier);
-
   return GoRouter(
     navigatorKey: globalNavigatorKey,
-    //refreshListenable: notifier,
     debugLogDiagnostics: true,
     initialLocation: AppRoute.path,
     routes: $appRoutes,
-    //redirect: notifier.redirect,
   );
 }
 
@@ -60,18 +60,66 @@ class SignUpRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return SignUpPage();
+    return const SignUpPage();
+  }
+}
+
+@TypedGoRoute<ApplicantRoute>(path: ApplicantRoute.path)
+class ApplicantRoute extends GoRouteData {
+  const ApplicantRoute();
+
+  static const path = '/applicant';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const ApplicantPage();
+  }
+}
+
+@TypedGoRoute<CompanyRoute>(path: CompanyRoute.path)
+class CompanyRoute extends GoRouteData {
+  const CompanyRoute();
+
+  static const path = '/company';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const CompanyPage();
+  }
+}
+
+@TypedGoRoute<ProfileRoute>(path: ProfileRoute.path)
+class ProfileRoute extends GoRouteData {
+  const ProfileRoute();
+
+  static const path = '/profile';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const ProfilePage();
+  }
+}
+
+@TypedGoRoute<VacancyRoute>(path: VacancyRoute.path)
+class VacancyRoute extends GoRouteData {
+  const VacancyRoute();
+
+  static const path = '/vacancy';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const VacancyPage();
   }
 }
 
 class GoNavigatorObserver extends NavigatorObserver {
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    debugPrint('did push route ${route} : ${previousRoute}');
+    debugPrint('did push route $route : $previousRoute');
   }
 
   @override
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    debugPrint('did pop route ${route} : ${previousRoute}');
+    debugPrint('did pop route $route : $previousRoute');
   }
 }
