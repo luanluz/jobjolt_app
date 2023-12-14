@@ -51,6 +51,7 @@ flutter:
     - assets/env/.env.development
     - assets/env/
     - assets/images/logo/
+    - assets/images/states/
 
 flutter_native_splash:
   # This package generates native code to customize Flutter's default white native splash screen

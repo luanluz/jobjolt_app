@@ -27,8 +27,29 @@ class JobJoltAppBar extends ConsumerWidget implements PreferredSizeWidget {
           ),
           icon: const Icon(Icons.logout_outlined),
           label: Text('Sair'),
-          onPressed: () async {
-            await ref.read(authNotifierProvider.notifier).logout();
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext ctx) {
+                return AlertDialog(
+                  backgroundColor: Colors.white,
+                  title: const Text('Sair do App'),
+                  content: const Text('Deseja encerrar sua sessão no app?'),
+                  actions: [
+                    TextButton(
+                      onPressed: Navigator.of(context).pop,
+                      child: const Text('Não')
+                    ),
+                    FilledButton.tonal(
+                      onPressed: () {
+                        ref.read(authNotifierProvider.notifier).logout();
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Sim')
+                    )
+                  ],
+                );
+              });
           },
         )
       ],

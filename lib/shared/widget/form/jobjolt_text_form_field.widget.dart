@@ -9,6 +9,7 @@ class JobJoltTextFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final FocusNode? focusNode;
   final bool obscureText;
+  final bool autofocus;
   final void Function()? onEditingComplete;
   final String? Function(String?)? validator;
 
@@ -22,12 +23,14 @@ class JobJoltTextFormField extends StatelessWidget {
     this.onEditingComplete,
     this.validator,
     this.focusNode,
-    this.obscureText = false
+    this.obscureText = false,
+    this.autofocus = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autofocus: autofocus,
       controller: controller,
       keyboardType: keyboardType,
       focusNode: focusNode,

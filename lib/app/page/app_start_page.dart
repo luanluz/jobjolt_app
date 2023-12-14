@@ -7,10 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Project imports:
 import 'package:jobjolt/app/provider/app_start_provider.dart';
 import 'package:jobjolt/feature/auth/page/sign_in.page.dart';
-import 'package:jobjolt/feature/home/page/home_page.dart';
 import 'package:jobjolt/feature/vacancy/page/vacancy.page.dart';
 import 'package:jobjolt/shared/widget/connection_unavailable_widget.dart';
-import 'package:jobjolt/shared/widget/loading_widget.dart';
+import 'package:jobjolt/shared/widget/loading_page.widget.dart';
 
 class AppStartPage extends ConsumerWidget {
   const AppStartPage({Key? key}) : super(key: key);
@@ -22,14 +21,14 @@ class AppStartPage extends ConsumerWidget {
     return state.when(
         data: (data) {
           return data.maybeWhen(
-            initial: () => const LoadingWidget(),
+            initial: () => const LoadingPage(),
             authenticated: () => const VacancyPage(),
             unauthenticated: SignInPage.new,
             internetUnAvailable: () => const ConnectionUnavailableWidget(),
-            orElse: () => const LoadingWidget(),
+            orElse: () => const LoadingPage(),
           );
         },
-        error: (e, st) => const LoadingWidget(),
-        loading: () => const LoadingWidget());
+        error: (e, st) => const LoadingPage(),
+        loading: () => const LoadingPage());
   }
 }

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:go_router/go_router.dart';
+import 'package:jobjolt/feature/vacancy/page/search.page.dart';
+import 'package:jobjolt/feature/vacancy/page/show.page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // Project imports:
@@ -105,6 +107,30 @@ class VacancyRoute extends GoRouteData {
   @override
   NoTransitionPage<void> buildPage(BuildContext context, GoRouterState state) =>
     const NoTransitionPage<void>(child: VacancyPage());
+}
+
+@TypedGoRoute<VacancySearchRoute>(path: VacancySearchRoute.path)
+class VacancySearchRoute extends GoRouteData {
+  const VacancySearchRoute();
+
+  static const path = '/vacancy/search';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const VacancySearchPage();
+}
+
+@TypedGoRoute<VacancyShowRoute>(path: VacancyShowRoute.path)
+class VacancyShowRoute extends GoRouteData {
+  const VacancyShowRoute();
+
+  static const path = '/vacancy/show';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    final id = state.extra as int;
+    return VacancyShowPage(vacancyId: id);
+  }
 }
 
 class GoNavigatorObserver extends NavigatorObserver {

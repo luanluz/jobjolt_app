@@ -144,7 +144,7 @@ class ApiProvider {
       }
 
       if (response.statusCode! < 300) {
-        return APIResponse.success(response.data['data'] ?? response.data);
+        return APIResponse.success(response.data);
       }
 
       return _handleError(response);
