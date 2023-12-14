@@ -1,8 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:jobjolt/shared/route/app_router.dart';
 
 // Project imports:
+import 'package:jobjolt/shared/route/app_router.dart';
 import 'package:jobjolt/shared/widget/navigation/bar/bar_destination.dart';
 
 final barDestinations = <BarDestination>[

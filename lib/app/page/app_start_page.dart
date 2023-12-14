@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jobjolt/app/provider/app_start_provider.dart';
 import 'package:jobjolt/feature/auth/page/sign_in.page.dart';
 import 'package:jobjolt/feature/home/page/home_page.dart';
+import 'package:jobjolt/feature/vacancy/page/vacancy.page.dart';
 import 'package:jobjolt/shared/widget/connection_unavailable_widget.dart';
 import 'package:jobjolt/shared/widget/loading_widget.dart';
 
@@ -22,7 +23,7 @@ class AppStartPage extends ConsumerWidget {
         data: (data) {
           return data.maybeWhen(
             initial: () => const LoadingWidget(),
-            authenticated: () => const HomePage(),
+            authenticated: () => const VacancyPage(),
             unauthenticated: SignInPage.new,
             internetUnAvailable: () => const ConnectionUnavailableWidget(),
             orElse: () => const LoadingWidget(),
