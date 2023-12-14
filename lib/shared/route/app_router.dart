@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:go_router/go_router.dart';
+import 'package:jobjolt/feature/company/page/search.page.dart';
+import 'package:jobjolt/feature/company/page/show.page.dart';
 import 'package:jobjolt/feature/vacancy/page/search.page.dart';
 import 'package:jobjolt/feature/vacancy/page/show.page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -85,6 +87,30 @@ class CompanyRoute extends GoRouteData {
   @override
   NoTransitionPage<void> buildPage(BuildContext context, GoRouterState state) =>
       const NoTransitionPage<void>(child: CompanyPage());
+}
+
+@TypedGoRoute<CompanySearchRoute>(path: CompanySearchRoute.path)
+class CompanySearchRoute extends GoRouteData {
+  const CompanySearchRoute();
+
+  static const path = '/company/search';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const CompanySearchPage();
+}
+
+@TypedGoRoute<CompanyShowRoute>(path: CompanyShowRoute.path)
+class CompanyShowRoute extends GoRouteData {
+  const CompanyShowRoute();
+
+  static const path = '/company/show';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    final id = state.extra as int;
+    return CompanyShowPage(companyId: id);
+  }
 }
 
 @TypedGoRoute<ProfileRoute>(path: ProfileRoute.path)
