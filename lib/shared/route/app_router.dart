@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:go_router/go_router.dart';
-import 'package:jobjolt/feature/applicant/page/applicant.page.dart';
-import 'package:jobjolt/feature/company/page/company.page.dart';
-import 'package:jobjolt/feature/profile/page/profile.page.dart';
-import 'package:jobjolt/feature/vacancy/page/vacancy.page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // Project imports:
 import 'package:jobjolt/app/page/app_start_page.dart';
+import 'package:jobjolt/feature/applicant/page/applicant.page.dart';
 import 'package:jobjolt/feature/auth/page/sign_in.page.dart';
 import 'package:jobjolt/feature/auth/page/sign_up.page.dart';
+import 'package:jobjolt/feature/company/page/company.page.dart';
+import 'package:jobjolt/feature/profile/page/profile.page.dart';
+import 'package:jobjolt/feature/vacancy/page/vacancy.page.dart';
 
 part 'app_router.g.dart';
 
@@ -70,10 +70,8 @@ class ApplicantRoute extends GoRouteData {
 
   static const path = '/applicant';
 
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const ApplicantPage();
-  }
+  NoTransitionPage<void> buildPage(BuildContext context, GoRouterState state) =>
+      const NoTransitionPage<void>(child: ApplicantPage());
 }
 
 @TypedGoRoute<CompanyRoute>(path: CompanyRoute.path)
@@ -83,9 +81,8 @@ class CompanyRoute extends GoRouteData {
   static const path = '/company';
 
   @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const CompanyPage();
-  }
+  NoTransitionPage<void> buildPage(BuildContext context, GoRouterState state) =>
+      const NoTransitionPage<void>(child: CompanyPage());
 }
 
 @TypedGoRoute<ProfileRoute>(path: ProfileRoute.path)
@@ -95,9 +92,8 @@ class ProfileRoute extends GoRouteData {
   static const path = '/profile';
 
   @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const ProfilePage();
-  }
+  NoTransitionPage<void> buildPage(BuildContext context, GoRouterState state) =>
+      const NoTransitionPage<void>(child: ProfilePage());
 }
 
 @TypedGoRoute<VacancyRoute>(path: VacancyRoute.path)
@@ -107,9 +103,8 @@ class VacancyRoute extends GoRouteData {
   static const path = '/vacancy';
 
   @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const VacancyPage();
-  }
+  NoTransitionPage<void> buildPage(BuildContext context, GoRouterState state) =>
+    const NoTransitionPage<void>(child: VacancyPage());
 }
 
 class GoNavigatorObserver extends NavigatorObserver {

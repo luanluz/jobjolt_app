@@ -11,10 +11,15 @@ class AppThemeData {
     navigationBarTheme: NavigationBarThemeData(
       iconTheme: MaterialStateProperty.resolveWith((states) =>
         states.contains(MaterialState.selected)
-          ? IconThemeData(color: lightColorScheme.onPrimary)
-          : const IconThemeData()
+          ? IconThemeData(color: lightColorScheme.primary)
+          : IconThemeData(color: lightColorScheme.outline)
       ),
-      indicatorColor: lightColorScheme.primary
+      labelTextStyle: MaterialStateProperty.resolveWith((state) =>
+        state.contains(MaterialState.selected)
+            ? TextStyle(color: lightColorScheme.primary, fontSize: 12.0, fontWeight: FontWeight.w500)
+            : TextStyle(color: lightColorScheme.outline, fontSize: 12.0, fontWeight: FontWeight.w500)
+      ),
+      indicatorColor: Colors.transparent
     )
   );
 
@@ -23,11 +28,16 @@ class AppThemeData {
       colorScheme: darkColorScheme,
       navigationBarTheme: NavigationBarThemeData(
           iconTheme: MaterialStateProperty.resolveWith((states) =>
-          states.contains(MaterialState.selected)
-              ? IconThemeData(color: darkColorScheme.onPrimary)
-              : const IconThemeData()
+            states.contains(MaterialState.selected)
+                ? IconThemeData(color: darkColorScheme.primary)
+                : IconThemeData(color: lightColorScheme.outline)
           ),
-          indicatorColor: darkColorScheme.primary
+          labelTextStyle: MaterialStateProperty.resolveWith((state) =>
+            state.contains(MaterialState.selected)
+                ? TextStyle(color: lightColorScheme.primary, fontSize: 12.0, fontWeight: FontWeight.w500)
+                : TextStyle(color: lightColorScheme.outline, fontSize: 12.0, fontWeight: FontWeight.w500)
+          ),
+          indicatorColor: Colors.transparent
       )
   );
 }

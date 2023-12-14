@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Project imports:
 import 'package:jobjolt/shared/route/app_router.dart';
 import 'package:jobjolt/shared/widget/navigation/bar/destinations.dart';
 
